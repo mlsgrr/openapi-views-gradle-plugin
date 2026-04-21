@@ -33,7 +33,7 @@ abstract class ApiViewsExtension @Inject constructor(
     val skipDefaultApiInterface: Property<Boolean> = objects.property(Boolean::class.java).convention(true)
     val useBeanValidation: Property<Boolean> = objects.property(Boolean::class.java).convention(true)
     val useTags: Property<Boolean> = objects.property(Boolean::class.java).convention(true)
-    val requestMappingMode: Property<String> = objects.property(String::class.java).convention("api_interface")
+    val requestMappingMode: Property<String> = objects.property(String::class.java).convention("controller")
     val cleanupOutput: Property<Boolean> = objects.property(Boolean::class.java).convention(true)
 
     val failOnUnmatchedOperations: Property<Boolean> = objects.property(Boolean::class.java).convention(false)

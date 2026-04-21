@@ -40,7 +40,7 @@ Your spec stays clean. Your architecture stays flexible.
 plugins {
     kotlin("jvm") version "1.9.25"
     id("org.openapi.generator") version "7.16.0"
-    id("io.github.mlsgrr.openapi-views") version "0.1.0"
+    id("io.github.mlsgrr.openapi-views") version "0.1.1"
 }
 ```
 
@@ -60,8 +60,7 @@ val generateDomainApi by tasks.registering(GenerateTask::class) {
         "skipDefaultInterface" to "true",
         "skipDefaultApiInterface" to "true",
         "useBeanValidation" to "true",
-        "useTags" to "true",
-        "requestMappingMode" to "api_interface"
+        "useTags" to "true"
     ))
 }
 ```
@@ -105,6 +104,20 @@ kotlin {
 ```
 
 The plugin automatically adds its own output directory. Run `./gradlew generateApiViews` or just build — it hooks into `compileKotlin`.
+
+## Route preservation
+
+Generated views should preserve the routing semantics of your source `kotlin-spring` generation. By default, this plugin uses the same `requestMappingMode` default as `kotlin-spring` (`controller`), so it does not force a class-level `@RequestMapping` onto generated interfaces.
+
+If your source generation explicitly sets `requestMappingMode`, set the same value for `apiViews`:
+
+```kotlin
+apiViews {
+    requestMappingMode.set("api_interface") // only if your source API generation also uses api_interface
+}
+```
+
+This avoids accidentally moving endpoints from `/cats` to something like `/v2/cats` just because the OpenAPI `servers` URL contains `/v2`.
 
 ## Matching options
 
